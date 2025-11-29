@@ -3,14 +3,50 @@ import { NavLink } from 'react-router-dom';
 import { ArrowRight, Globe, Users, Award, Zap, Building2, Monitor, BookOpen, CheckCircle } from 'lucide-react';
 import { Course } from '../types';
 
-// Mock Data for Horizontal Scroll
+// Real Unsplash Images for IT/Cloud Themes
 const featuredCourses: Course[] = [
-  { id: '1', title: 'Full Stack Java', category: 'Development', description: 'Master Java, Spring Boot, and React.', image: 'https://picsum.photos/seed/java/400/250' },
-  { id: '2', title: 'AWS Cloud Architect', category: 'Cloud', description: 'Become a certified AWS Solutions Architect.', image: 'https://picsum.photos/seed/aws/400/250' },
-  { id: '3', title: 'Data Science with Python', category: 'Data', description: 'Analyze data with Python and ML libraries.', image: 'https://picsum.photos/seed/python/400/250' },
-  { id: '4', title: 'DevOps Engineering', category: 'DevOps', description: 'CI/CD, Docker, Kubernetes mastery.', image: 'https://picsum.photos/seed/devops/400/250' },
-  { id: '5', title: 'Software Testing (QA)', category: 'Testing', description: 'Manual and Automation testing excellence.', image: 'https://picsum.photos/seed/testing/400/250' },
-  { id: '6', title: 'Cyber Security', category: 'Security', description: 'Protect enterprise networks and data.', image: 'https://picsum.photos/seed/security/400/250' },
+  { 
+    id: '1', 
+    title: 'Full Stack Java', 
+    category: 'Development', 
+    description: 'Master Java, Spring Boot, and React.', 
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80' 
+  },
+  { 
+    id: '2', 
+    title: 'AWS Cloud Architect', 
+    category: 'Cloud', 
+    description: 'Become a certified AWS Solutions Architect.', 
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80' 
+  },
+  { 
+    id: '3', 
+    title: 'Data Science with Python', 
+    category: 'Data', 
+    description: 'Analyze data with Python and ML libraries.', 
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80' 
+  },
+  { 
+    id: '4', 
+    title: 'DevOps Engineering', 
+    category: 'DevOps', 
+    description: 'CI/CD, Docker, Kubernetes mastery.', 
+    image: 'https://images.unsplash.com/photo-1618401471353-b74a07e9c331?auto=format&fit=crop&w=800&q=80' 
+  },
+  { 
+    id: '5', 
+    title: 'Software Testing (QA)', 
+    category: 'Testing', 
+    description: 'Manual and Automation testing excellence.', 
+    image: 'https://images.unsplash.com/photo-1516110833967-0b5716ca1387?auto=format&fit=crop&w=800&q=80' 
+  },
+  { 
+    id: '6', 
+    title: 'Cyber Security', 
+    category: 'Security', 
+    description: 'Protect enterprise networks and data.', 
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80' 
+  },
 ];
 
 const clients = [
@@ -22,7 +58,10 @@ const Home: React.FC = () => {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://picsum.photos/seed/techbg/1920/1080')] opacity-10 bg-cover bg-center"></div>
+        {/* Updated High-Quality Tech Background */}
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=80')] opacity-20 bg-cover bg-center mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-slate-900/40"></div>
+        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="lg:w-3/4">
             <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
@@ -153,12 +192,13 @@ const Home: React.FC = () => {
             {featuredCourses.map((course) => (
               <div key={course.id} className="min-w-[300px] md:min-w-[350px] snap-center">
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 group cursor-pointer hover:shadow-xl transition-all duration-300">
-                  <div className="h-48 overflow-hidden">
+                  <div className="h-48 overflow-hidden relative">
                     <img 
                       src={course.image} 
                       alt={course.title} 
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   <div className="p-6">
                     <span className="text-xs font-bold text-blue-600 uppercase tracking-wider bg-blue-50 px-2 py-1 rounded-md">{course.category}</span>

@@ -5,8 +5,9 @@ const Services: React.FC = () => {
   return (
     <div className="pt-24 pb-20 min-h-screen">
       {/* Header */}
-      <div className="bg-blue-600 text-white py-20 mb-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="bg-blue-600 text-white py-20 mb-16 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80')] opacity-20 bg-cover bg-center"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Tech Skyline IT Solutions</h1>
           <p className="text-xl text-blue-100 max-w-3xl mx-auto">
             Comprehensive IT Consulting, Staffing, and Training Services designed for success.
@@ -31,7 +32,7 @@ const Services: React.FC = () => {
             </ul>
           </div>
           <div className="md:w-2/3">
-             <img src="https://picsum.photos/seed/staffing/800/400" alt="IT Staffing" className="rounded-2xl shadow-md w-full h-64 object-cover mb-6" />
+             <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80" alt="IT Staffing" className="rounded-2xl shadow-md w-full h-80 object-cover mb-6" />
              <p className="text-gray-600 text-lg">
                Our IT Staffing services are designed to meet the dynamic needs of modern businesses. Whether you need short-term expertise or long-term leadership, Tech Skyline provides professionals who integrate seamlessly into your teams.
              </p>
@@ -79,7 +80,7 @@ const Services: React.FC = () => {
                 </div>
              </div>
              <div className="md:w-1/2">
-                <img src="https://picsum.photos/seed/corporate/600/400" alt="Corporate Training" className="rounded-xl shadow-lg w-full" />
+                <img src="https://images.unsplash.com/photo-1515168816513-48968b575862?auto=format&fit=crop&w=800&q=80" alt="Corporate Training" className="rounded-xl shadow-lg w-full" />
              </div>
           </div>
         </div>
