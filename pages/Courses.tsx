@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { Course } from '../types';
-import { Search, ListFilter, CheckCircle2, FlaskConical, Award, ShieldCheck } from 'lucide-react';
+import { Search, ListFilter, CheckCircle2, FlaskConical, Award, ShieldCheck, ToggleLeft, ToggleRight } from 'lucide-react';
 import CourseModal from '../components/CourseModal';
 
 const allCourses: Course[] = [
@@ -63,7 +63,7 @@ const allCourses: Course[] = [
     curriculum: ['Ethical Hacking Intro', 'Network Penetration Testing', 'Web App Security', 'Cryptography', 'Incident Response', 'Compliance'],
     prerequisites: ['Strong Networking basics'],
     instructor: { name: 'James Wilson', bio: 'CISSP Certified Professional.' },
-    hasLiveLab: true
+    hasLiveLab: false
   },
   { 
     id: '6', 
@@ -82,14 +82,19 @@ const allCourses: Course[] = [
 const Courses: React.FC = () => {
   const [sortBy, setSortBy] = useState<'title' | 'category'>('title');
   const [searchTerm, setSearchTerm] = useState('');
+  const [showOnlyLiveLabs, setShowOnlyLiveLabs] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
   const filtered = useMemo(() => {
-    return allCourses.filter(c => 
-      c.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      c.category.toLowerCase().includes(searchTerm.toLowerCase())
-    ).sort((a, b) => a[sortBy].localeCompare(b[sortBy]));
-  }, [searchTerm, sortBy]);
+    return allCourses
+      .filter(c => {
+        const matchesSearch = c.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                              c.category.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesLiveLab = showOnlyLiveLabs ? c.hasLiveLab : true;
+        return matchesSearch && matchesLiveLab;
+      })
+      .sort((a, b) => a[sortBy].localeCompare(b[sortBy]));
+  }, [searchTerm, sortBy, showOnlyLiveLabs]);
 
   return (
     <div className="pt-24 pb-20 min-h-screen">
@@ -102,8 +107,9 @@ const Courses: React.FC = () => {
         </div>
 
         {/* Controls */}
-        <div className="flex flex-col md:flex-row gap-4 mb-16 items-center">
-          <div className="relative flex-grow">
+        <div className="flex flex-col lg:flex-row gap-4 mb-16 items-center">
+          {/* Search */}
+          <div className="relative flex-grow w-full lg:w-auto">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-sky-400" size={20} />
             <input 
               type="text" 
@@ -113,71 +119,115 @@ const Courses: React.FC = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <div className="flex items-center gap-3 bg-white/50 backdrop-blur px-6 py-4 rounded-2xl border border-white shadow-sm">
-            <ListFilter size={20} className="text-sky-600" />
-            <span className="text-sm font-bold text-sky-800">Sort:</span>
-            <select 
-              className="bg-transparent font-bold text-sm focus:outline-none cursor-pointer"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
+
+          <div className="flex flex-wrap items-center justify-center gap-4 w-full lg:w-auto">
+            {/* Live Lab Toggle */}
+            <button 
+              onClick={() => setShowOnlyLiveLabs(!showOnlyLiveLabs)}
+              className={`flex items-center gap-3 px-6 py-4 rounded-2xl border transition-all shadow-sm ${
+                showOnlyLiveLabs 
+                ? 'bg-sky-600 border-sky-600 text-white shadow-sky-200' 
+                : 'bg-white/50 backdrop-blur border-white text-sky-800'
+              }`}
             >
-              <option value="title">Alphabetical</option>
-              <option value="category">Category</option>
-            </select>
+              <FlaskConical size={20} className={showOnlyLiveLabs ? 'text-white' : 'text-sky-600'} />
+              <span className="text-sm font-bold">Live Lab Access</span>
+              {showOnlyLiveLabs ? <ToggleRight size={24} /> : <ToggleLeft size={24} className="text-sky-300" />}
+            </button>
+
+            {/* Sort Dropdown */}
+            <div className="flex items-center gap-3 bg-white/50 backdrop-blur px-6 py-4 rounded-2xl border border-white shadow-sm min-w-[180px]">
+              <ListFilter size={20} className="text-sky-600" />
+              <span className="text-sm font-bold text-sky-800">Sort:</span>
+              <select 
+                className="bg-transparent font-bold text-sm focus:outline-none cursor-pointer flex-grow"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+              >
+                <option value="title">Alphabetical</option>
+                <option value="category">Category</option>
+              </select>
+            </div>
           </div>
+        </div>
+
+        {/* Results Info */}
+        <div className="mb-8 flex justify-between items-center">
+          <p className="text-sky-900/40 text-sm font-bold uppercase tracking-widest">
+            Showing {filtered.length} courses
+          </p>
+          {showOnlyLiveLabs && (
+             <span className="text-[10px] font-black text-sky-600 bg-sky-100 px-3 py-1 rounded-full uppercase tracking-tighter">
+               Filter Active: Live Lab Access Only
+             </span>
+          )}
         </div>
 
         {/* Course Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filtered.map(course => (
-            <div 
-              key={course.id} 
-              className="glass-card rounded-[2.5rem] border-2 border-white overflow-hidden group hover:border-sky-300 transition-all duration-500 shadow-xl flex flex-col h-full"
-            >
-              <div className="relative h-56 overflow-hidden">
-                <img src={course.image} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                <div className="absolute top-4 right-4 flex flex-col gap-2">
-                   {course.hasLiveLab && (
-                     <div className="bg-sky-600 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1 shadow-lg">
-                        <FlaskConical size={12} /> Live Lab Access
+          {filtered.length > 0 ? (
+            filtered.map(course => (
+              <div 
+                key={course.id} 
+                className="glass-card rounded-[2.5rem] border-2 border-white overflow-hidden group hover:border-sky-300 transition-all duration-500 shadow-xl flex flex-col h-full"
+              >
+                <div className="relative h-56 overflow-hidden">
+                  <img src={course.image} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute top-4 right-4 flex flex-col gap-2">
+                     {course.hasLiveLab && (
+                       <div className="bg-sky-600 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1 shadow-lg">
+                          <FlaskConical size={12} /> Live Lab Access
+                       </div>
+                     )}
+                     <div className="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black text-sky-600 uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                        <Award size={12} /> Certified
                      </div>
-                   )}
-                   <div className="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black text-sky-600 uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                      <Award size={12} /> Certified
-                   </div>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="p-8 flex-1 flex flex-col">
-                <div className="flex justify-between items-start mb-4">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-sky-500 bg-sky-50 px-2 py-0.5 rounded">{course.category}</span>
-                </div>
-                <h3 className="text-2xl font-black mb-4 group-hover:text-sky-600 transition-colors leading-tight">{course.title}</h3>
-                <p className="text-sky-800/60 text-sm mb-6 line-clamp-2 font-medium">{course.description}</p>
                 
-                <div className="space-y-2 mb-8">
-                   <p className="text-xs font-black text-sky-900 uppercase tracking-widest mb-3">Key Highlights:</p>
-                   {course.keyPoints.map((point, idx) => (
-                     <div key={idx} className="flex items-center gap-2 text-sm text-sky-800 font-bold">
-                        <CheckCircle2 size={16} className="text-green-500" /> {point}
-                     </div>
-                   ))}
-                </div>
+                <div className="p-8 flex-1 flex flex-col">
+                  <div className="flex justify-between items-start mb-4">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-sky-500 bg-sky-50 px-2 py-0.5 rounded">{course.category}</span>
+                  </div>
+                  <h3 className="text-2xl font-black mb-4 group-hover:text-sky-600 transition-colors leading-tight">{course.title}</h3>
+                  <p className="text-sky-800/60 text-sm mb-6 line-clamp-2 font-medium">{course.description}</p>
+                  
+                  <div className="space-y-2 mb-8">
+                     <p className="text-xs font-black text-sky-900 uppercase tracking-widest mb-3">Key Highlights:</p>
+                     {course.keyPoints.map((point, idx) => (
+                       <div key={idx} className="flex items-center gap-2 text-sm text-sky-800 font-bold">
+                          <CheckCircle2 size={16} className="text-green-500" /> {point}
+                       </div>
+                     ))}
+                  </div>
 
-                <div className="mt-auto pt-6 border-t border-sky-100 flex flex-col gap-3">
-                   <button 
-                     onClick={() => setSelectedCourse(course)}
-                     className="w-full py-4 bg-sky-600 text-white font-black rounded-2xl hover:bg-sky-700 transition-all shadow-lg shadow-sky-200"
-                   >
-                     Course Outline
-                   </button>
-                   <div className="flex items-center justify-center gap-1 text-[10px] font-bold text-sky-400">
-                      <ShieldCheck size={12} /> Job Assistance Included
-                   </div>
+                  <div className="mt-auto pt-6 border-t border-sky-100 flex flex-col gap-3">
+                     <button 
+                       onClick={() => setSelectedCourse(course)}
+                       className="w-full py-4 bg-sky-600 text-white font-black rounded-2xl hover:bg-sky-700 transition-all shadow-lg shadow-sky-200"
+                     >
+                       Course Outline
+                     </button>
+                     <div className="flex items-center justify-center gap-1 text-[10px] font-bold text-sky-400">
+                        <ShieldCheck size={12} /> Job Assistance Included
+                     </div>
+                  </div>
                 </div>
               </div>
+            ))
+          ) : (
+            <div className="col-span-full py-20 text-center glass-card rounded-[3rem] border-white shadow-sm">
+              <FlaskConical size={48} className="mx-auto text-sky-200 mb-6" />
+              <h3 className="text-2xl font-black text-sky-900 mb-2">No Courses Found</h3>
+              <p className="text-sky-800/50 font-medium">Try adjusting your search or filters to see more results.</p>
+              <button 
+                onClick={() => { setSearchTerm(''); setShowOnlyLiveLabs(false); }}
+                className="mt-6 text-sky-600 font-bold hover:underline"
+              >
+                Clear all filters
+              </button>
             </div>
-          ))}
+          )}
         </div>
       </div>
 
