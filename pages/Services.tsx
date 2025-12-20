@@ -1,116 +1,113 @@
+
 import React from 'react';
-import { Briefcase, Users, Monitor, ShieldCheck, BarChart, Code, Server, BookOpen } from 'lucide-react';
+import { Briefcase, Users, Cpu, ShieldCheck, BarChart, Rocket, CheckCircle, Award, LayoutDashboard } from 'lucide-react';
 
 const Services: React.FC = () => {
   return (
-    <div className="pt-24 pb-20 min-h-screen">
-      {/* Header */}
-      <div className="bg-blue-600 text-white py-20 mb-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80')] opacity-20 bg-cover bg-center"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Tech Skyline IT Solutions</h1>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-            Comprehensive IT Consulting, Staffing, and Training Services designed for success.
-          </p>
-        </div>
+    <div className="pt-24 pb-20 min-h-screen text-white">
+      {/* Radiant Header */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 text-center">
+        <h1 className="text-5xl md:text-6xl font-black mb-6">Solutions <span className="text-gradient">& Services</span></h1>
+        <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          From talent acquisition to workforce transformation, we provide the architectural blueprint for your IT success.
+        </p>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32">
         
-        {/* IT Staffing */}
-        <div id="staffing" className="flex flex-col md:flex-row gap-12 items-start">
-          <div className="md:w-1/3 bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-            <Briefcase className="h-12 w-12 text-blue-600 mb-6" />
-            <h3 className="text-2xl font-bold mb-4">IT Staffing</h3>
-            <p className="text-gray-600 mb-6">
-              We connect top-tier IT talent with leading organizations. Our staffing solutions ensure you have the right people to drive your projects forward.
+        {/* In-Depth Corporate Training */}
+        <section id="corporate" className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-6">
+            <div className="inline-block px-4 py-1 rounded-full bg-purple-600/20 text-purple-400 text-xs font-bold uppercase tracking-widest">Enterprise Solutions</div>
+            <h2 className="text-4xl font-bold">In-Depth <span className="text-purple-400">Corporate Training</span></h2>
+            <p className="text-gray-400 text-lg leading-relaxed">
+              We don't just teach tools; we transform cultures. Our corporate training modules are custom-built to align with your organization’s tech stack and long-term business roadmap.
             </p>
-            <ul className="space-y-2 text-gray-600 text-sm">
-              <li className="flex items-center"><Users className="h-4 w-4 mr-2 text-blue-500" /> Contract Staffing</li>
-              <li className="flex items-center"><Users className="h-4 w-4 mr-2 text-blue-500" /> Permanent Placement</li>
-              <li className="flex items-center"><Users className="h-4 w-4 mr-2 text-blue-500" /> Project Management</li>
-            </ul>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="glass-card p-4 rounded-xl flex items-center gap-3">
+                <CheckCircle className="text-purple-500" size={20} /> <span className="text-sm font-semibold">Custom Lab Environments</span>
+              </div>
+              <div className="glass-card p-4 rounded-xl flex items-center gap-3">
+                <CheckCircle className="text-purple-500" size={20} /> <span className="text-sm font-semibold">Live Case Studies</span>
+              </div>
+              <div className="glass-card p-4 rounded-xl flex items-center gap-3">
+                <CheckCircle className="text-purple-500" size={20} /> <span className="text-sm font-semibold">Skills Assessment Dashboards</span>
+              </div>
+              <div className="glass-card p-4 rounded-xl flex items-center gap-3">
+                <CheckCircle className="text-purple-500" size={20} /> <span className="text-sm font-semibold">ROI Post-Training Analysis</span>
+              </div>
+            </div>
           </div>
-          <div className="md:w-2/3">
-             <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80" alt="IT Staffing" className="rounded-2xl shadow-md w-full h-80 object-cover mb-6" />
-             <p className="text-gray-600 text-lg">
-               Our IT Staffing services are designed to meet the dynamic needs of modern businesses. Whether you need short-term expertise or long-term leadership, Tech Skyline provides professionals who integrate seamlessly into your teams.
-             </p>
-          </div>
-        </div>
-
-        {/* IT Training */}
-        <div id="training" className="flex flex-col md:flex-row-reverse gap-12 items-center">
-           <div className="md:w-1/3 bg-blue-50 p-8 rounded-2xl shadow-sm border border-blue-100">
-            <BookOpen className="h-12 w-12 text-blue-600 mb-6" />
-            <h3 className="text-2xl font-bold mb-4">IT Training</h3>
-            <p className="text-gray-600 mb-6">
-               World-class online training for individuals looking to start or advance their IT careers.
-            </p>
-            <ul className="space-y-2 text-gray-600 text-sm">
-              <li className="flex items-center"><Users className="h-4 w-4 mr-2 text-blue-500" /> 100+ Interactive Courses</li>
-              <li className="flex items-center"><Users className="h-4 w-4 mr-2 text-blue-500" /> Live Expert Instructors</li>
-              <li className="flex items-center"><Users className="h-4 w-4 mr-2 text-blue-500" /> Real-time Projects</li>
-            </ul>
-           </div>
-           <div className="md:w-2/3">
-             <h2 className="text-3xl font-bold text-gray-900 mb-4">Comprehensive IT Training</h2>
-             <p className="text-gray-600 text-lg leading-relaxed">
-               From Java Full Stack to AWS Cloud, Data Science, and Cyber Security. Our training programs are built on core concepts, hands-on labs, and interview-focused preparation to ensure career success.
-             </p>
-           </div>
-        </div>
-
-        {/* Corporate Training */}
-        <div id="corporate" className="bg-slate-900 text-white rounded-3xl p-8 md:p-16">
-          <div className="flex flex-col md:flex-row gap-12 items-center">
-             <div className="md:w-1/2">
-                <div className="inline-block bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold mb-4">FOR BUSINESSES</div>
-                <h2 className="text-3xl font-bold mb-6">Corporate Training Solutions</h2>
-                <p className="text-gray-300 mb-6">
-                  Upskill your workforce with our customized corporate training programs. We deliver training that is aligned with your specific business goals and technology stack.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="bg-white/10 p-4 rounded-lg">
-                    <h4 className="font-bold flex items-center mb-1"><Monitor className="h-4 w-4 mr-2 text-blue-400" /> Customized Curriculum</h4>
-                  </div>
-                  <div className="bg-white/10 p-4 rounded-lg">
-                    <h4 className="font-bold flex items-center mb-1"><BarChart className="h-4 w-4 mr-2 text-blue-400" /> Performance Tracking</h4>
-                  </div>
-                </div>
-             </div>
-             <div className="md:w-1/2">
-                <img src="https://images.unsplash.com/photo-1515168816513-48968b575862?auto=format&fit=crop&w=800&q=80" alt="Corporate Training" className="rounded-xl shadow-lg w-full" />
+          <div className="relative">
+             <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" alt="Corporate Training" className="rounded-3xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700" />
+             <div className="absolute -bottom-6 -right-6 glass-card p-6 rounded-2xl animate-pulse">
+                <Award className="text-yellow-400 w-12 h-12" />
              </div>
           </div>
-        </div>
+        </section>
 
-        {/* Technology Consulting & Software Testing */}
-        <div className="grid md:grid-cols-2 gap-8">
-           <div id="consulting" className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
-              <Server className="h-12 w-12 text-blue-600 mb-6" />
-              <h3 className="text-2xl font-bold mb-4">Technology Consulting</h3>
-              <p className="text-gray-600 mb-4">
-                 We help organizations shape, strengthen, and accelerate their IT strategies. From digital transformation to process optimization.
-              </p>
-              <ul className="space-y-2 text-gray-600 text-sm">
-                 <li className="flex items-center"><Code className="h-4 w-4 mr-2 text-blue-500" /> Strategy Development</li>
-                 <li className="flex items-center"><Code className="h-4 w-4 mr-2 text-blue-500" /> Implementation & Optimization</li>
-              </ul>
-           </div>
+        {/* Global Staffing Solutions */}
+        <section id="staffing" className="grid lg:grid-cols-2 gap-16 items-center flex-row-reverse">
+          <div className="lg:order-2 space-y-6">
+            <div className="inline-block px-4 py-1 rounded-full bg-blue-600/20 text-blue-400 text-xs font-bold uppercase tracking-widest">Talent Acquisition</div>
+            <h2 className="text-4xl font-bold">Professional <span className="text-blue-400">Staffing & Placements</span></h2>
+            <p className="text-gray-400 text-lg leading-relaxed">
+              Our "Hire-Train-Deploy" model ensures that companies get candidates who are productive from Day 1. We specialize in contract staffing and executive search for niche IT roles.
+            </p>
+            <div className="space-y-4">
+               <div className="flex items-start gap-4 p-5 glass-card rounded-2xl border-l-4 border-blue-500">
+                  <div className="bg-blue-500 p-2 rounded-lg"><Users size={20} /></div>
+                  <div>
+                    <h4 className="font-bold">98% Success Ratio</h4>
+                    <p className="text-sm text-gray-500 italic">Our rigorous vetting process matches the right culture and the right skill.</p>
+                  </div>
+               </div>
+               <div className="flex items-start gap-4 p-5 glass-card rounded-2xl border-l-4 border-cyan-500">
+                  <div className="bg-cyan-500 p-2 rounded-lg"><LayoutDashboard size={20} /></div>
+                  <div>
+                    <h4 className="font-bold">End-to-End Placement Support</h4>
+                    <p className="text-sm text-gray-500 italic">Resume polishing, mock interviews, and technical background checks included.</p>
+                  </div>
+               </div>
+            </div>
+          </div>
+          <div className="lg:order-1 relative">
+             <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80" alt="Staffing" className="rounded-3xl shadow-2xl" />
+          </div>
+        </section>
 
-           <div id="testing" className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
-              <ShieldCheck className="h-12 w-12 text-blue-600 mb-6" />
-              <h3 className="text-2xl font-bold mb-4">Software Testing (QA)</h3>
-              <p className="text-gray-600 mb-4">
-                 Ensure your software is reliable, secure, and high-performing. We offer manual and automation testing services.
-              </p>
-               <ul className="space-y-2 text-gray-600 text-sm">
-                 <li className="flex items-center"><Code className="h-4 w-4 mr-2 text-blue-500" /> QA Automation</li>
-                 <li className="flex items-center"><Code className="h-4 w-4 mr-2 text-blue-500" /> Performance Testing</li>
-              </ul>
-           </div>
-        </div>
+        {/* Internship Program */}
+        <section id="internship" className="relative p-12 md:p-20 glass-card rounded-[3rem] overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-600/20 blur-[100px] rounded-full"></div>
+          <div className="relative z-10 text-center max-w-4xl mx-auto">
+            <Rocket className="text-cyan-400 w-16 h-16 mx-auto mb-8 animate-bounce" />
+            <h2 className="text-4xl font-bold mb-6">Real-World <span className="text-cyan-400">Internship Program</span></h2>
+            <p className="text-gray-300 text-lg mb-10">
+              Get immersive experience working on live client projects. Our internship isn't about fetching coffee—it's about writing code, architecting cloud nodes, and analyzing data pipelines.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+               <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <div className="text-2xl font-bold text-white mb-2">Duration</div>
+                  <div className="text-gray-400">3-6 Months</div>
+               </div>
+               <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <div className="text-2xl font-bold text-white mb-2">Experience</div>
+                  <div className="text-gray-400">Live Projects</div>
+               </div>
+               <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                  <div className="text-2xl font-bold text-white mb-2">Outcome</div>
+                  <div className="text-gray-400">PPO Available</div>
+               </div>
+            </div>
+            <a 
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfcG6IKVRWZg0qi0V7eBRvRDozo0HRifzhEM5vEfLtFLvADbA/viewform" 
+              target="_blank" 
+              className="inline-block bg-cyan-600 hover:bg-cyan-500 text-white px-12 py-4 rounded-full font-black text-lg shadow-xl shadow-cyan-600/20 transition-all"
+            >
+              Apply for Internship
+            </a>
+          </div>
+        </section>
 
       </div>
     </div>

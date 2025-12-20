@@ -1,147 +1,77 @@
-import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+
+import React from 'react';
+import { Mail, Phone, MapPin, Send, MessageCircle, Clock, Globe, Award } from 'lucide-react';
 
 const Contact: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert("Thank you for contacting Tech Skyline IT Solutions! We will get back to you shortly.");
-    setFormData({ name: '', email: '', phone: '', message: '' });
-  };
-
   return (
-    <div className="pt-24 pb-20 min-h-screen bg-gray-50">
+    <div className="pt-24 pb-20 min-h-screen text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Ready to transform your career or business? Contact Tech Skyline IT Solutions today for consultation, training inquiries, or general questions.
+        <div className="text-center mb-16 pt-16">
+          <h1 className="text-5xl font-black mb-4">Connect with <span className="text-gradient">Tech Skyline</span></h1>
+          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+            Whether you're starting a course or scaling your enterprise, our global team is ready to respond.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          
-          {/* Contact Info Card */}
-          <div className="bg-slate-900 text-white rounded-2xl p-10 shadow-xl flex flex-col justify-between h-full">
-            <div>
-              <h3 className="text-2xl font-bold mb-8">Contact Information</h3>
-              <div className="space-y-8">
-                <div className="flex items-start">
-                  <div className="bg-white/10 p-3 rounded-lg mr-4">
-                    <Mail className="h-6 w-6 text-blue-400" />
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-sm mb-1">Email Us</p>
-                    <p className="font-medium break-all">techskylineitsolutions20204@gmail.com</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="bg-white/10 p-3 rounded-lg mr-4">
-                    <Phone className="h-6 w-6 text-blue-400" />
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-sm mb-1">Call Us</p>
-                    <p className="font-medium">+1-408-614-0468</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="bg-white/10 p-3 rounded-lg mr-4">
-                    <MapPin className="h-6 w-6 text-blue-400" />
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-sm mb-1">Location</p>
-                    <p className="font-medium">
-                      Global Headquarters<br/>
-                      Serving USA, UK, Canada & Australia
-                    </p>
-                  </div>
-                </div>
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+          {/* Quick Contact Cards */}
+          <div className="glass-card p-8 rounded-3xl hover:border-blue-500 transition-colors group">
+            <div className="w-12 h-12 bg-blue-600/20 rounded-xl flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 transition-transform">
+              <Phone />
             </div>
-
-            <div className="mt-12 pt-12 border-t border-white/10">
-              <p className="text-gray-400 text-sm">
-                Our support team is available 24/7 to assist you with course enrollment and consulting queries.
-              </p>
-            </div>
+            <h3 className="text-xl font-bold mb-2">Call Us</h3>
+            <p className="text-gray-400 text-sm mb-4">Immediate expert consultation</p>
+            <p className="font-bold text-blue-400">+1-408-614-0468</p>
           </div>
 
-          {/* Contact Form */}
-          <div className="bg-white rounded-2xl p-10 shadow-lg border border-gray-100">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
-                  placeholder="John Doe"
-                />
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
-                    placeholder="john@example.com"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
-                    placeholder="+1 (408) 614-0468"
-                  />
-                </div>
-              </div>
+          <div className="glass-card p-8 rounded-3xl hover:border-purple-500 transition-colors group">
+            <div className="w-12 h-12 bg-purple-600/20 rounded-xl flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform">
+              <Mail />
+            </div>
+            <h3 className="text-xl font-bold mb-2">Email Support</h3>
+            <p className="text-gray-400 text-sm mb-4">24-hour turnaround time</p>
+            <p className="font-bold text-purple-400 break-all text-sm">techskylineitsolutions20204@gmail.com</p>
+          </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                <textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none resize-none"
-                  placeholder="Tell us about your requirements..."
-                ></textarea>
-              </div>
+          <div className="glass-card p-8 rounded-3xl hover:border-cyan-500 transition-colors group">
+            <div className="w-12 h-12 bg-cyan-600/20 rounded-xl flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition-transform">
+              <Clock />
+            </div>
+            <h3 className="text-xl font-bold mb-2">Operating Hours</h3>
+            <p className="text-gray-400 text-sm mb-4">Global support coverage</p>
+            <p className="font-bold text-cyan-400">24/7 Global Access</p>
+          </div>
+        </div>
 
-              <button
-                type="submit"
-                className="w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition-colors shadow-lg flex justify-center items-center gap-2"
-              >
-                Send Message <Send className="h-5 w-5" />
-              </button>
-            </form>
+        {/* Recruitment Form Section */}
+        <div className="glass-card rounded-[3rem] overflow-hidden grid lg:grid-cols-5 min-h-[600px]">
+          <div className="lg:col-span-2 bg-gradient-to-br from-blue-900 to-indigo-950 p-12 flex flex-col justify-center">
+            <h2 className="text-3xl font-bold mb-6">Placement & Training Inquiry</h2>
+            <p className="text-blue-200 mb-8">
+              Fill out our official recruitment form to join our placement assistance program or inquire about corporate staffing.
+            </p>
+            <ul className="space-y-4">
+               <li className="flex items-center gap-3"><MessageCircle className="text-blue-400" size={20} /> Professional Resume Audit</li>
+               <li className="flex items-center gap-3"><Globe className="text-blue-400" size={20} /> Global Opportunities</li>
+               <li className="flex items-center gap-3"><Award className="text-blue-400" size={20} /> Top MNC Interviews</li>
+            </ul>
+            <div className="mt-12 p-6 bg-white/5 rounded-2xl border border-white/10">
+               <p className="text-xs text-gray-400 italic">"Our mission is to ensure 100% professional alignment for every student."</p>
+            </div>
+          </div>
+          <div className="lg:col-span-3 bg-white p-2">
+            <iframe 
+              src="https://docs.google.com/forms/d/e/1FAIpQLSfcG6IKVRWZg0qi0V7eBRvRDozo0HRifzhEM5vEfLtFLvADbA/viewform?embedded=true" 
+              width="100%" 
+              height="800" 
+              frameBorder="0" 
+              marginHeight={0} 
+              marginWidth={0}
+              className="rounded-2xl"
+            >
+              Loading form...
+            </iframe>
           </div>
         </div>
       </div>

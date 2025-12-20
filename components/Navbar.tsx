@@ -1,47 +1,46 @@
+
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Menu, X, Cpu } from 'lucide-react';
+import { Menu, X, Cpu, Sparkles } from 'lucide-react';
 import { NavItem } from '../types';
 
 const navItems: NavItem[] = [
   { label: 'Home', path: '/' },
   { label: 'Courses', path: '/courses' },
-  { label: 'Solutions', path: '/solutions' },
-  { label: 'Services', path: '/services' },
-  { label: 'Contact Us', path: '/contact' },
+  { label: 'The Edge', path: '/the-edge' },
+  { label: 'Internship', path: '/internship' },
+  { label: 'Corporate', path: '/corporate' },
+  { label: 'Demos', path: '/demos' },
+  { label: 'Contact', path: '/contact' },
 ];
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-
   return (
-    <nav className="bg-white shadow-md fixed w-full z-50 top-0 left-0 border-b border-gray-100">
+    <nav className="fixed w-full z-50 top-0 left-0 bg-white/80 backdrop-blur-xl border-b border-sky-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
-          {/* Logo */}
-          <div className="flex-shrink-0 flex items-center cursor-pointer">
+          <div className="flex-shrink-0 flex items-center">
             <NavLink to="/" className="flex items-center gap-2">
-              <div className="bg-blue-600 p-2 rounded-lg">
+              <div className="bg-sky-600 p-2 rounded-lg shadow-lg shadow-sky-200">
                 <Cpu className="h-6 w-6 text-white" />
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-xl text-gray-900 leading-none">TECH SKYLINE</span>
-                <span className="text-xs text-blue-600 font-semibold tracking-wider">IT SOLUTIONS</span>
+                <span className="font-bold text-xl text-sky-900 leading-none tracking-tight">TECH SKYLINE</span>
+                <span className="text-[10px] text-sky-500 font-extrabold tracking-[0.2em]">IT SOLUTIONS</span>
               </div>
             </NavLink>
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden lg:flex space-x-4">
             {navItems.map((item) => (
               <NavLink
                 key={item.label}
                 to={item.path}
                 className={({ isActive }) =>
-                  `text-sm font-medium transition-colors duration-200 ${
-                    isActive ? 'text-blue-600 border-b-2 border-blue-600 pb-1' : 'text-gray-600 hover:text-blue-600'
+                  `text-sm font-bold transition-all duration-200 px-3 py-1.5 rounded-full ${
+                    isActive ? 'bg-sky-600 text-white shadow-md' : 'text-sky-800 hover:text-sky-600 hover:bg-sky-50'
                   }`
                 }
               >
@@ -50,50 +49,40 @@ const Navbar: React.FC = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:flex">
-            <NavLink to="/contact" className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-lg hover:shadow-xl">
-              Get Started
+          <div className="hidden lg:flex items-center gap-4">
+            <NavLink to="/demos" className="flex items-center gap-2 text-sky-600 font-bold text-sm px-4 py-2 hover:bg-sky-50 rounded-full transition-all">
+              <Sparkles size={16} /> Free Demo
+            </NavLink>
+            <NavLink to="/contact" className="bg-sky-950 hover:bg-black text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg shine-effect">
+              Join Now
             </NavLink>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={toggleMenu}
-              className="text-gray-600 hover:text-blue-600 focus:outline-none"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          <div className="lg:hidden flex items-center">
+            <button onClick={() => setIsOpen(!isOpen)} className="text-sky-800 p-2 focus:outline-none">
+              {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 absolute w-full">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="lg:hidden bg-white border-t border-sky-100 absolute w-full shadow-2xl animate-in slide-in-from-top duration-300">
+          <div className="px-4 pt-4 pb-10 space-y-2">
             {navItems.map((item) => (
               <NavLink
                 key={item.label}
                 to={item.path}
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
-                  `block px-3 py-2 rounded-md text-base font-medium ${
-                    isActive ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-50 hover:text-blue-600'
+                  `block px-4 py-4 rounded-xl text-lg font-bold ${
+                    isActive ? 'bg-sky-600 text-white shadow-lg' : 'text-sky-800'
                   }`
                 }
               >
                 {item.label}
               </NavLink>
             ))}
-             <NavLink
-                to="/contact"
-                onClick={() => setIsOpen(false)}
-                className="block w-full text-center mt-4 bg-blue-600 text-white px-3 py-3 rounded-md font-medium"
-              >
-                Get Started
-              </NavLink>
           </div>
         </div>
       )}

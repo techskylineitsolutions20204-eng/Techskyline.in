@@ -1,16 +1,19 @@
+
 export interface Course {
   id: string;
   title: string;
   category: string;
   description: string;
   image: string;
-}
-
-export interface Service {
-  id: string;
-  title: string;
-  description: string;
-  icon: 'Consulting' | 'Staffing' | 'Training' | 'Development' | 'Testing';
+  keyPoints: string[];
+  curriculum?: string[];
+  prerequisites?: string[];
+  instructor?: {
+    name: string;
+    bio: string;
+    image?: string;
+  };
+  hasLiveLab?: boolean;
 }
 
 export interface NavItem {

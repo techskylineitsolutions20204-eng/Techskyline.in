@@ -1,126 +1,187 @@
-import React from 'react';
+
+import React, { useState, useMemo } from 'react';
 import { Course } from '../types';
-import { Search } from 'lucide-react';
+import { Search, ListFilter, CheckCircle2, FlaskConical, Award, ShieldCheck } from 'lucide-react';
+import CourseModal from '../components/CourseModal';
 
 const allCourses: Course[] = [
   { 
     id: '1', 
-    title: 'Full Stack Java', 
+    title: 'Full Stack Java Engineering', 
     category: 'Development', 
-    description: 'Comprehensive Java Full Stack development course covering backend, frontend, and database.', 
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80' 
+    description: 'Master enterprise-level Java development with Spring Boot, Microservices, and React.', 
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80',
+    keyPoints: ['Microservices Architecture', 'Spring Security & OAuth2', 'React.js Frontend Integration', 'Jenkins CI/CD Automation'],
+    curriculum: ['Core Java (JDK 17+)', 'Spring Framework & Boot', 'Hibernate & JPA', 'React Frontend Integration', 'RESTful API Development', 'MySQL Database Design'],
+    prerequisites: ['Basic programming logic', 'Understanding of HTML/CSS'],
+    instructor: { name: 'Dr. Michael Chen', bio: 'Senior Software Architect with 15+ years experience in Enterprise Java applications.' },
+    hasLiveLab: true
   },
   { 
     id: '2', 
-    title: 'AWS Cloud Architect', 
+    title: 'AWS Cloud Architect Pro', 
     category: 'Cloud', 
-    description: 'Master AWS services and architecture to become a certified Solutions Architect.', 
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80' 
+    description: 'High-level cloud infrastructure design focusing on scalability, security, and performance.', 
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
+    keyPoints: ['VPC Peering & Networking', 'Serverless (Lambda/DynamoDB)', 'IAM Enterprise Security', 'Cost Optimization Strategies'],
+    curriculum: ['VPC & Networking', 'EC2 & Auto Scaling', 'S3 & CloudFront', 'IAM & Security', 'Serverless with Lambda', 'Well-Architected Framework'],
+    prerequisites: ['Basic IT networking knowledge', 'Experience with virtualization'],
+    instructor: { name: 'Sarah Jenkins', bio: 'Certified AWS Solutions Architect Professional.' },
+    hasLiveLab: true
   },
   { 
     id: '3', 
-    title: 'Data Science with Python', 
+    title: 'Data Science & AI/ML', 
     category: 'Data Science', 
-    description: 'Learn data analysis, visualization, and machine learning using Python.', 
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80' 
+    description: 'Transform raw data into predictive insights using Python and modern AI frameworks.', 
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
+    keyPoints: ['Predictive Modeling (ML)', 'Deep Learning with PyTorch', 'Data Visualization (Tableau)', 'Big Data Integration'],
+    curriculum: ['Python for Data Science', 'NumPy & Pandas', 'Matplotlib & Seaborn', 'Scikit-Learn ML Models', 'Deep Learning Basics', 'SQL for Data Analysis'],
+    prerequisites: ['Mathematical aptitude', 'Basic Python knowledge'],
+    instructor: { name: 'Dr. Robert Vonn', bio: 'Data Scientist and former researcher at MIT.' },
+    hasLiveLab: true
   },
   { 
     id: '4', 
-    title: 'DevOps Engineering', 
+    title: 'Ultimate DevOps Engineer', 
     category: 'DevOps', 
-    description: 'End-to-end DevOps training including Git, Jenkins, Docker, Kubernetes, and Ansible.', 
-    image: 'https://images.unsplash.com/photo-1618401471353-b74a07e9c331?auto=format&fit=crop&w=800&q=80' 
+    description: 'The complete path to becoming a DevOps Pro: Docker, K8s, Terraform, and beyond.', 
+    image: 'https://images.unsplash.com/photo-1618401471353-b74a07e9c331?auto=format&fit=crop&w=800&q=80',
+    keyPoints: ['Kubernetes Orchestration', 'Infrastructure as Code (IaC)', 'DevSecOps Pipeline Security', 'Grafana/Prometheus Monitoring'],
+    curriculum: ['Version Control (Git)', 'CI/CD Pipelines (Jenkins)', 'Containerization (Docker)', 'Orchestration (Kubernetes)', 'Infrastructure as Code (Terraform)', 'Monitoring (Prometheus/Grafana)'],
+    prerequisites: ['Linux Administration basics', 'Scripting knowledge'],
+    instructor: { name: 'Alex Rivera', bio: 'DevOps Lead at a Fortune 500 tech firm.' },
+    hasLiveLab: true
   },
   { 
     id: '5', 
-    title: 'Software Testing (QA)', 
-    category: 'Testing', 
-    description: 'Manual and Automation testing excellence with Selenium and advanced tools.', 
-    image: 'https://images.unsplash.com/photo-1516110833967-0b5716ca1387?auto=format&fit=crop&w=800&q=80' 
+    title: 'Next-Gen Cyber Security', 
+    category: 'Security', 
+    description: 'Defend enterprise assets through ethical hacking and advanced threat modeling.', 
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80',
+    keyPoints: ['Penetration Testing Tools', 'Cloud Security Posture', 'Zero Trust Architecture', 'Incident Response Ops'],
+    curriculum: ['Ethical Hacking Intro', 'Network Penetration Testing', 'Web App Security', 'Cryptography', 'Incident Response', 'Compliance'],
+    prerequisites: ['Strong Networking basics'],
+    instructor: { name: 'James Wilson', bio: 'CISSP Certified Professional.' },
+    hasLiveLab: true
   },
   { 
     id: '6', 
-    title: 'Cyber Security', 
-    category: 'Security', 
-    description: 'Learn ethical hacking, network security, and risk management.', 
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80' 
-  },
-  { 
-    id: '7', 
-    title: 'UI/UX Design', 
-    category: 'Design', 
-    description: 'Create stunning user interfaces and experiences with Figma and Adobe XD.', 
-    image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=800&q=80' 
-  },
-  { 
-    id: '8', 
-    title: 'Big Data Hadoop', 
-    category: 'Data', 
-    description: 'Process massive datasets using Hadoop ecosystem and Spark.', 
-    image: 'https://images.unsplash.com/photo-1558494949-efc5270f313f?auto=format&fit=crop&w=800&q=80' 
-  },
-  { 
-    id: '9', 
-    title: 'Salesforce Admin & Dev', 
+    title: 'Salesforce Architect', 
     category: 'CRM', 
-    description: 'Complete Salesforce training for Administrators and Developers.', 
-    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80' 
-  },
+    description: 'Master the world\'s #1 CRM platform for both administration and complex development.', 
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80',
+    keyPoints: ['Apex Development', 'Lightning Web Components', 'Einstein AI Integration', 'SFDX Tooling'],
+    curriculum: ['SFDC Configuration', 'Security & Access Models', 'Automation (Flows)', 'Apex Programming', 'LWC Framework'],
+    prerequisites: ['Business process awareness'],
+    instructor: { name: 'Anjali Gupta', bio: 'Salesforce MVP.' },
+    hasLiveLab: true
+  }
 ];
 
 const Courses: React.FC = () => {
+  const [sortBy, setSortBy] = useState<'title' | 'category'>('title');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+
+  const filtered = useMemo(() => {
+    return allCourses.filter(c => 
+      c.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      c.category.toLowerCase().includes(searchTerm.toLowerCase())
+    ).sort((a, b) => a[sortBy].localeCompare(b[sortBy]));
+  }, [searchTerm, sortBy]);
+
   return (
-    <div className="pt-24 pb-20 min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Tech Skyline Courses</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Explore 100+ interactive online courses designed to build strong IT professionals. 
-            From coding to cloud, we have it all.
+    <div className="pt-24 pb-20 min-h-screen">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="text-center py-16">
+          <h1 className="text-5xl md:text-6xl font-black mb-4 tracking-tight">Technical <span className="text-gradient">Training Hub</span></h1>
+          <p className="text-sky-900/60 font-medium max-w-2xl mx-auto text-lg">
+            High-density skill building with industry-grade live labs and placement-focused curriculum.
           </p>
         </div>
 
-        {/* Search Bar */}
-        <div className="max-w-xl mx-auto mb-12 relative">
-          <input 
-            type="text" 
-            placeholder="Search for a course (e.g. Java, AWS)..." 
-            className="w-full px-6 py-4 rounded-full border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 pl-12"
-          />
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+        {/* Controls */}
+        <div className="flex flex-col md:flex-row gap-4 mb-16 items-center">
+          <div className="relative flex-grow">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-sky-400" size={20} />
+            <input 
+              type="text" 
+              placeholder="Search technologies..." 
+              className="w-full pl-12 pr-6 py-4 rounded-2xl glass-card border-white shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 font-medium text-sky-900"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <div className="flex items-center gap-3 bg-white/50 backdrop-blur px-6 py-4 rounded-2xl border border-white shadow-sm">
+            <ListFilter size={20} className="text-sky-600" />
+            <span className="text-sm font-bold text-sky-800">Sort:</span>
+            <select 
+              className="bg-transparent font-bold text-sm focus:outline-none cursor-pointer"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+            >
+              <option value="title">Alphabetical</option>
+              <option value="category">Category</option>
+            </select>
+          </div>
         </div>
 
         {/* Course Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {allCourses.map((course) => (
-            <div key={course.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-full group">
-              <div className="h-48 overflow-hidden relative">
-                <img 
-                  src={course.image} 
-                  alt={course.title} 
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-blue-600 shadow-sm border border-blue-100">
-                  {course.category}
+          {filtered.map(course => (
+            <div 
+              key={course.id} 
+              className="glass-card rounded-[2.5rem] border-2 border-white overflow-hidden group hover:border-sky-300 transition-all duration-500 shadow-xl flex flex-col h-full"
+            >
+              <div className="relative h-56 overflow-hidden">
+                <img src={course.image} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div className="absolute top-4 right-4 flex flex-col gap-2">
+                   {course.hasLiveLab && (
+                     <div className="bg-sky-600 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1 shadow-lg">
+                        <FlaskConical size={12} /> Live Lab Access
+                     </div>
+                   )}
+                   <div className="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black text-sky-600 uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                      <Award size={12} /> Certified
+                   </div>
                 </div>
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
               </div>
-              <div className="p-6 flex-1 flex flex-col">
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">{course.title}</h3>
-                <p className="text-gray-600 text-sm mb-4 flex-1 line-clamp-3">{course.description}</p>
-                <div className="mt-auto border-t border-gray-100 pt-4 flex justify-between items-center">
-                  <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">10 Weeks</span>
-                  <button className="text-blue-600 font-semibold text-sm hover:text-blue-800 flex items-center gap-1">
-                    View Details
-                  </button>
+              
+              <div className="p-8 flex-1 flex flex-col">
+                <div className="flex justify-between items-start mb-4">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-sky-500 bg-sky-50 px-2 py-0.5 rounded">{course.category}</span>
+                </div>
+                <h3 className="text-2xl font-black mb-4 group-hover:text-sky-600 transition-colors leading-tight">{course.title}</h3>
+                <p className="text-sky-800/60 text-sm mb-6 line-clamp-2 font-medium">{course.description}</p>
+                
+                <div className="space-y-2 mb-8">
+                   <p className="text-xs font-black text-sky-900 uppercase tracking-widest mb-3">Key Highlights:</p>
+                   {course.keyPoints.map((point, idx) => (
+                     <div key={idx} className="flex items-center gap-2 text-sm text-sky-800 font-bold">
+                        <CheckCircle2 size={16} className="text-green-500" /> {point}
+                     </div>
+                   ))}
+                </div>
+
+                <div className="mt-auto pt-6 border-t border-sky-100 flex flex-col gap-3">
+                   <button 
+                     onClick={() => setSelectedCourse(course)}
+                     className="w-full py-4 bg-sky-600 text-white font-black rounded-2xl hover:bg-sky-700 transition-all shadow-lg shadow-sky-200"
+                   >
+                     Course Outline
+                   </button>
+                   <div className="flex items-center justify-center gap-1 text-[10px] font-bold text-sky-400">
+                      <ShieldCheck size={12} /> Job Assistance Included
+                   </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {selectedCourse && <CourseModal course={selectedCourse} onClose={() => setSelectedCourse(null)} />}
     </div>
   );
 };

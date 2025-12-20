@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { MessageSquare, X, Send, Loader2, Sparkles } from 'lucide-react';
@@ -40,21 +41,8 @@ const GeminiChat: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const apiKey = process.env.API_KEY || ''; 
-      
-      if (!apiKey) {
-         const errorMsg: ChatMessage = {
-          id: (Date.now() + 1).toString(),
-          text: "I'm currently in demo mode without an API key. Please contact support via email for real inquiries.",
-          sender: ChatSender.BOT,
-          timestamp: new Date()
-        };
-        setMessages(prev => [...prev, errorMsg]);
-        setIsLoading(false);
-        return;
-      }
-
-      const ai = new GoogleGenAI({ apiKey });
+      // Use process.env.API_KEY directly as per the coding guidelines.
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       
       const systemInstruction = `
         You are an expert AI assistant for "Tech Skyline IT Solutions". 
@@ -72,8 +60,9 @@ const GeminiChat: React.FC = () => {
         Keep answers concise (under 100 words) unless asked for details.
       `;
 
+      // Use 'gemini-3-flash-preview' for basic text tasks as per model guidelines.
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3-flash-preview',
         contents: input,
         config: {
             systemInstruction: systemInstruction,
